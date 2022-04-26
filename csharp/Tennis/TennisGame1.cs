@@ -2,24 +2,24 @@ namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private int m_score1;
-        private int m_score2;
+        private int player1Score;
+        private int player2Score;
 
         public void WonPoint(string playerName)
         {
             if (playerName == "player1")
-                m_score1 += 1;
+                player1Score += 1;
             else
-                m_score2 += 1;
+                player2Score += 1;
         }
 
         public string GetScore()
         {
             string score = "";
             int tempScore;
-            if (m_score1 == m_score2)
+            if (player1Score == player2Score)
             {
-                switch (m_score1)
+                switch (player1Score)
                 {
                     case 0:
                         score = "Love-All";
@@ -36,9 +36,9 @@ namespace Tennis
 
                 }
             }
-            else if (m_score1 >= 4 || m_score2 >= 4)
+            else if (player1Score >= 4 || player2Score >= 4)
             {
-                var minusResult = m_score1 - m_score2;
+                var minusResult = player1Score - player2Score;
                 if (minusResult == 1) score = "Advantage player1";
                 else if (minusResult == -1) score = "Advantage player2";
                 else if (minusResult >= 2) score = "Win for player1";
@@ -48,8 +48,8 @@ namespace Tennis
             {
                 for (var i = 1; i < 3; i++)
                 {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
+                    if (i == 1) tempScore = player1Score;
+                    else { score += "-"; tempScore = player2Score; }
                     switch (tempScore)
                     {
                         case 0:
