@@ -2,8 +2,8 @@ namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
+        private int m_score1;
+        private int m_score2;
 
         public TennisGame1(string player1Name, string player2Name)
         {
@@ -20,7 +20,7 @@ namespace Tennis
         public string GetScore()
         {
             string score = "";
-            var tempScore = 0;
+            int tempScore;
             if (m_score1 == m_score2)
             {
                 switch (m_score1)
