@@ -5,7 +5,7 @@ namespace Tennis
         private int m_score1;
         private int m_score2;
 
-        public TennisGame1(string player1Name, string player2Name)
+        public TennisGame1()
         {
         }
 
