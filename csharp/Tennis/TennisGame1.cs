@@ -62,27 +62,23 @@ namespace Tennis
             return score;
         }
 
-        private string SetAdvantageOrWinGame()
-        {
-            return (player1Score - player2Score) switch
+        private string SetAdvantageOrWinGame() =>
+            (player1Score - player2Score) switch
             {
                 1 => "Advantage player1",
                 -1 => "Advantage player2",
                 >= 2 => "Win for player1",
                 _ => "Win for player2"
             };
-        }
 
-        private string EqualScoreHandle()
-        {
-            return player1Score switch
+        private string EqualScoreHandle() =>
+            player1Score switch
             {
                 0 => "Love-All",
                 1 => "Fifteen-All",
                 2 => "Thirty-All",
                 _ => "Deuce"
             };
-        }
     }
 }
 
