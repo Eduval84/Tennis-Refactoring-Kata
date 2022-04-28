@@ -7,6 +7,7 @@ namespace Tennis
 
         private string _p1Res = "";
         private string _p2Res = "";
+        private string _score = "";
 
         public TennisGame2(string player1Name, string player2Name)
         {
@@ -15,54 +16,75 @@ namespace Tennis
 
         public string GetScore()
         {
-            var score = "";
-            score = EqualScoreHandle(score);
+            _score = "";
+            _score = EqualScoreHandle(_score);
 
-            score = GeneralScoreHandle(score);
+            _score = GeneralScoreHandle(_score);
 
-            if (_p1Point > _p2Point && _p1Point < 4)
+            _score = GeneralScoreHandlePointLess4(_score);
+
+            _score = AdvantageScore(_score);
+
+            if (_p1Point >= 4 && _p2Point >= 0 && (_p1Point - _p2Point) >= 2)
             {
-                if (_p1Point == 2)
-                    _p1Res = "Thirty";
-                if (_p1Point == 3)
-                    _p1Res = "Forty";
-                if (_p2Point == 1)
-                    _p2Res = "Fifteen";
-                if (_p2Point == 2)
-                    _p2Res = "Thirty";
-                score = _p1Res + "-" + _p2Res;
+                _score = "Win for player1";
             }
-            if (_p2Point > _p1Point && _p2Point < 4)
+            if (_p2Point >= 4 && _p1Point >= 0 && (_p2Point - _p1Point) >= 2)
             {
-                if (_p2Point == 2)
-                    _p2Res = "Thirty";
-                if (_p2Point == 3)
-                    _p2Res = "Forty";
-                if (_p1Point == 1)
-                    _p1Res = "Fifteen";
-                if (_p1Point == 2)
-                    _p1Res = "Thirty";
-                score = _p1Res + "-" + _p2Res;
+                _score = "Win for player2";
             }
+            return _score;
+        }
 
+        private string AdvantageScore(string score)
+        {
             if (_p1Point > _p2Point && _p2Point >= 3)
             {
                 score = "Advantage player1";
             }
-
-            if (_p2Point > _p1Point && _p1Point >= 3)
+            else if (_p2Point > _p1Point && _p1Point >= 3)
             {
                 score = "Advantage player2";
             }
 
-            if (_p1Point >= 4 && _p2Point >= 0 && (_p1Point - _p2Point) >= 2)
+            return score;
+        }
+
+        private string GeneralScoreHandlePointLess4(string score)
+        {
+            if (_p1Point > _p2Point && _p1Point < 4)
             {
-                score = "Win for player1";
+                _p1Res = _p1Point switch
+                {
+                    2 => "Thirty",
+                    3 => "Forty",
+                    _ => _p1Res
+                };
+                _p2Res = _p2Point switch
+                {
+                    1 => "Fifteen",
+                    2 => "Thirty",
+                    _ => _p2Res
+                };
+                score = _p1Res + "-" + _p2Res;
             }
-            if (_p2Point >= 4 && _p1Point >= 0 && (_p2Point - _p1Point) >= 2)
+
+            if (_p2Point <= _p1Point || _p2Point >= 4) return score;
+
+            _p2Res = _p2Point switch
             {
-                score = "Win for player2";
-            }
+                2 => "Thirty",
+                3 => "Forty",
+                _ => _p2Res
+            };
+            _p1Res = _p1Point switch
+            {
+                1 => "Fifteen",
+                2 => "Thirty",
+                _ => _p1Res
+            };
+            score = _p1Res + "-" + _p2Res;
+
             return score;
         }
 
