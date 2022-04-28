@@ -113,9 +113,9 @@ namespace Tennis
         public void WonPoint(string player)
         {
             if (player == "player1")
-                P1Score();
+                p1point++;
             else
-                P2Score();
+                p2point++;
         }
 
     }
