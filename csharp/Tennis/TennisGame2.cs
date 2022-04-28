@@ -68,36 +68,33 @@ namespace Tennis
 
         private string GeneralScoreHandle(string score)
         {
-            if (_p1Point > 0 || _p2Point > 0)
-            {
-                
-                if (_p2Point == 0)
-                {
-                    _p1Res = _p1Point switch
-                    {
-                        1 => "Fifteen",
-                        2 => "Thirty",
-                        3 => "Forty",
-                        _ => _p1Res
-                    };
-                    _p2Res = "Love";
-                    score = _p1Res + "-" + _p2Res;
-                }
-            }
+            if (_p1Point <= 0 && _p2Point <= 0) return score;
 
-            if (_p2Point > 0 && _p1Point == 0)
+            if (_p2Point == 0)
             {
-                _p2Res = _p2Point switch
+                _p1Res = _p1Point switch
                 {
                     1 => "Fifteen",
                     2 => "Thirty",
                     3 => "Forty",
-                    _ => _p2Res
+                    _ => _p1Res
                 };
-
-                _p1Res = "Love";
+                _p2Res = "Love";
                 score = _p1Res + "-" + _p2Res;
             }
+
+            if (_p1Point != 0) return score;
+
+            _p2Res = _p2Point switch
+            {
+                1 => "Fifteen",
+                2 => "Thirty",
+                3 => "Forty",
+                _ => _p2Res
+            };
+
+            _p1Res = "Love";
+            score = _p1Res + "-" + _p2Res;
 
             return score;
         }
