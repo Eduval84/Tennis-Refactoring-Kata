@@ -16,18 +16,7 @@ namespace Tennis
         public string GetScore()
         {
             var score = "";
-            if (_p1Point == _p2Point && _p1Point < 3)
-            {
-                if (_p1Point == 0)
-                    score = "Love";
-                if (_p1Point == 1)
-                    score = "Fifteen";
-                if (_p1Point == 2)
-                    score = "Thirty";
-                score += "-All";
-            }
-            if (_p1Point == _p2Point && _p1Point > 2)
-                score = "Deuce";
+            score = EqualScoreHandle(score);
 
             if (_p1Point > 0 && _p2Point == 0)
             {
@@ -98,6 +87,30 @@ namespace Tennis
                 score = "Win for player2";
             }
             return score;
+        }
+
+        private string EqualScoreHandle(string score)
+        {
+            if (!EqualPlayerPoints()) return score;
+            if (_p1Point < 3)
+            {
+                score = _p1Point switch
+                {
+                    0 => "Love",
+                    1 => "Fifteen",
+                    2 => "Thirty",
+                    _ => score
+                };
+                score += "-All";
+            }
+            else
+                score = "Deuce";
+            return score;
+        }
+
+        private bool EqualPlayerPoints()
+        {
+            return _p1Point == _p2Point;
         }
 
         public void WonPoint(string player)
