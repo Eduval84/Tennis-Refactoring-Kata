@@ -16,15 +16,17 @@ namespace Tennis
 
         public string GetScore()
         {
-            _score = "";
-            _score = EqualScoreHandle(_score);
 
-            _score = GeneralScoreHandle(_score);
+            EqualScoreHandle();
+            GeneralScoreHandle();
+            GeneralScoreHandlePointLess4();
+            AdvantageScore();
+            DeterminesWinningPlayer();
+            return _score;
+        }
 
-            _score = GeneralScoreHandlePointLess4(_score);
-
-            _score = AdvantageScore(_score);
-
+        private void DeterminesWinningPlayer()
+        {
             if (_p1Point >= 4 && _p2Point >= 0 && (_p1Point - _p2Point) >= 2)
             {
                 _score = "Win for player1";
@@ -33,24 +35,21 @@ namespace Tennis
             {
                 _score = "Win for player2";
             }
-            return _score;
         }
 
-        private string AdvantageScore(string score)
+        private void AdvantageScore()
         {
             if (_p1Point > _p2Point && _p2Point >= 3)
             {
-                score = "Advantage player1";
+                _score = "Advantage player1";
             }
             else if (_p2Point > _p1Point && _p1Point >= 3)
             {
-                score = "Advantage player2";
+                _score = "Advantage player2";
             }
-
-            return score;
         }
 
-        private string GeneralScoreHandlePointLess4(string score)
+        private void GeneralScoreHandlePointLess4()
         {
             if (_p1Point > _p2Point && _p1Point < 4)
             {
@@ -66,10 +65,10 @@ namespace Tennis
                     2 => "Thirty",
                     _ => _p2Res
                 };
-                score = _p1Res + "-" + _p2Res;
+                _score = _p1Res + "-" + _p2Res;
             }
 
-            if (_p2Point <= _p1Point || _p2Point >= 4) return score;
+            if (_p2Point <= _p1Point || _p2Point >= 4) return;
 
             _p2Res = _p2Point switch
             {
@@ -83,14 +82,12 @@ namespace Tennis
                 2 => "Thirty",
                 _ => _p1Res
             };
-            score = _p1Res + "-" + _p2Res;
-
-            return score;
+            _score = _p1Res + "-" + _p2Res;
         }
 
-        private string GeneralScoreHandle(string score)
+        private void GeneralScoreHandle()
         {
-            if (_p1Point <= 0 && _p2Point <= 0) return score;
+            if (_p1Point <= 0 && _p2Point <= 0) return;
 
             if (_p2Point == 0)
             {
@@ -102,10 +99,10 @@ namespace Tennis
                     _ => _p1Res
                 };
                 _p2Res = "Love";
-                score = _p1Res + "-" + _p2Res;
+                _score = _p1Res + "-" + _p2Res;
             }
 
-            if (_p1Point != 0) return score;
+            if (_p1Point != 0) return;
 
             _p2Res = _p2Point switch
             {
@@ -116,28 +113,25 @@ namespace Tennis
             };
 
             _p1Res = "Love";
-            score = _p1Res + "-" + _p2Res;
-
-            return score;
+            _score = _p1Res + "-" + _p2Res;
         }
 
-        private string EqualScoreHandle(string score)
+        private void EqualScoreHandle()
         {
-            if (!EqualPlayerPoints()) return score;
+            if (!EqualPlayerPoints()) return;
             if (_p1Point < 3)
             {
-                score = _p1Point switch
+                _score = _p1Point switch
                 {
                     0 => "Love",
                     1 => "Fifteen",
                     2 => "Thirty",
-                    _ => score
+                    _ => _score
                 };
-                score += "-All";
+                _score += "-All";
             }
             else
-                score = "Deuce";
-            return score;
+                _score = "Deuce";
         }
 
         private bool EqualPlayerPoints()
